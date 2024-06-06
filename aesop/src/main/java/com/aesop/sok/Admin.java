@@ -24,11 +24,7 @@ public class Admin {
 	
 	//수정
 	BufferedOutputStream bos;
-
-
-	
-  // 운영자 유저는 하나라고 가정하고 만약 둘 이상의 세션에서 접속을 하면 마지막 세션만 작동한다.
-  private static Session admin = null;
+	private static Session admin = null;
   
   
   @GetMapping("socket/adminTest")
@@ -63,8 +59,8 @@ public class Admin {
   // 운영자 유저가 메시지를 보내면 발생하는 이벤트
   @OnMessage
   public void handleMessage(String message, Session userSession) throws IOException {
-    // key와 메시지 구분키를 #####를 넣었다. (json으로 해도 되는데 Gson 연결까지 하면 귀찮아져서...)
-    String[] split = message.split("#####", 2);
+
+	  String[] split = message.split("#####", 2);
     // 앞은 key 데이터
     String key = split[0];
     // 뒤 정보는 메시지
@@ -74,8 +70,8 @@ public class Admin {
   }
   
   
-//수정
-  //바이너리 데이터 들어오면 호출
+  //수정필요
+  //바이너리 데이터 들어오면 호출(이미지 전송)
   @OnMessage
   public void processUpload(ByteBuffer msg, boolean last, Session session) {
       
@@ -91,7 +87,7 @@ public class Admin {
 
   
   
-  // 접속이 끊기면 위 운영자 세션을 null 처리한다.
+  // 접속이 끊기면 위 운영자 세션을 null 처리
   @OnClose
   public void handleClose(Session userSession) {
     admin = null;

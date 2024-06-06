@@ -52,7 +52,7 @@
 				
     			
     		
-    			<script type="text/javascript">    // 서버의 broadsocket의 서블릿으로 웹 소켓을 한다.   
+    			<script type="text/javascript">      
     			
     			var webSocket = new WebSocket("ws://localhost:8091/myapp/broadsocket");    
     			var messageTextArea = document.getElementById("messageTextArea");     
@@ -66,6 +66,7 @@
     			webSocket.onerror = function(message) {    		// 에러가 발생하면           
     				messageTextArea.value += "error...\n";    
     			};  	 // 콘솔에 메시지를 남긴다.      
+    			
     			
     			
     			//서버로부터 이전 대화 내용을 가져와서 표시하는 함수
@@ -89,33 +90,29 @@
     	
     			
     			
-    			webSocket.onmessage = function(message) {      // 서버로부터 메시지가 도착하면 콘솔 화면에 메시지를 남긴다. 
+    			webSocket.onmessage = function(message) {      // 메세지 받으면 출력
     				messageTextArea.value += "(관리자) => " + message.data + "\n";  
-    				
-    				
-    				
     				
     			};    
     						
     						
     						
-				// 서버로 메시지를 발송하는 함수    
-				// Send 버튼을 누르거나 텍스트 박스에서 엔터를 치면 실행    
-				function sendMessage() {      // 텍스트 박스의 객체를 가져옴      
+				// 서버로 메시지 발송하는 함수    
+				function sendMessage() {        
 					let message = document.getElementById("textMessage");      // 콘솔에 메세지를 남긴다.      
 					//var msg = JSON.parse(JSON.stringify(post));
 					//var key = uuid  //유저 고유번호 어떻게 불러오더라....
 					
-					messageTextArea.value += "(나) => " + message.value + "\n";      // 소켓으로 보낸다.      
+					messageTextArea.value += "(나) => " + message.value + "\n";        
 					webSocket.send(message.value);       
 					console.log(message.value);
 					message.value = "";    // 텍스트 박스 초기화 
 					
-				}    // 텍스트 박스에서 엔터를 누르면    
+				}    
 					
-				
-				function enter() {      // keyCode 13은 엔터이다.      
-					if(event.keyCode === 13) {        // 서버로 메시지 전송        
+				 // 텍스트 박스에서 엔터 누르면 전송 
+				function enter() {          
+					if(event.keyCode === 13) {           
 						sendMessage();        // form에 의해 자동 submit을 막는다.        
 						return false;      
 					}      
@@ -143,7 +140,7 @@
 				
 				
 				//파일을 선택하고 해당 파일의 이름을 메시지로 보내며 선택할 파일을 설정
-				function selectFile(e){  //e를 매개변수로 받음
+				function selectFile(e){  
 					sendMessage(e.target.files[0].name);  //첫번째로 선택된 파일의 이름 
 					
 					setFile(e.target.files[0]);
