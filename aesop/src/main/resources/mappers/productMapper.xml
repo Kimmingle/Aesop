@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="product">
+<select id="getTotalCount" resultType="int"> 
+	select COUNT(*) from product 
+</select>
+<!--  상품 목록  -->
+<select id="getProductList" resultType="com.aesop.domain.Product"> 
+	select * from product order by pno desc 
+</select>
+<!--  상품 목록  -->
+<select id="getCategoryList" parameterType="String" resultType="com.aesop.domain.Product"> 
+	select * from product where category=#{category} order by pno desc 
+</select>
+<!--  상품 상세보기   -->
+<select id="getProduct" resultType="com.aesop.domain.Product"> 
+	select * from product where pno=#{pno} 
+</select>
+<insert id="insProduct" parameterType="com.aesop.domain.Product"> 
+	insert into product values (default, #{category}, #{pname}, #{com}, #{price}, #{img}, #{img2}, #{img3}) 
+	</insert>
+<update id="upProduct" parameterType="com.aesop.domain.Product"> 
+	update product set category=#{category}, pname=#{pname}, com=#{com}, price=#{price}, img=#{img}, img2=#{img2}, img3=#{img3} where pno=#{pno} 
+</update>
+<delete id="delProduct"> 
+	delete from product where pno=#{pno} 
+</delete>
+</mapper>
