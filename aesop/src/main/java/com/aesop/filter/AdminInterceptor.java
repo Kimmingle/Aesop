@@ -1,5 +1,6 @@
 package com.aesop.filter;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -29,7 +30,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
             return false;
         }
         
-        if(ses.getId().equals("admin")){ //관리자(admin) 계정인 경우 (/admin/**) 접근 가능
+        if(ses.getEmail().equals("admin@aesop.com")){ //관리자(admin) 계정인 경우 (/admin/**) 접근 가능
             return true;
         } else { //관리자(admin) 계정이 아닌 경우
             response.sendRedirect(request.getContextPath()+"/member/login.do");

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+
+	<select id="getMemberList" resultType="com.aesop.domain.Member">
+		select * from member order by regdate desc
+	</select>	
+	<select id="getMember" parameterType="String" resultType="com.aesop.domain.Member">
+		select * from member where email=#{email, jdbcType=VARCHAR}
+	</select>
+	<select id="memberCount" resultType="int">
+		select count(*) from member
+	</select>
+	
+      <insert id="insMember">
+        INSERT INTO member (email, pw, name, tel, addr1, addr2, postcode, birth, point, regdate)
+        VALUES 
+        (#{email}, #{pw}, #{name}, 
+        #{tel, jdbcType=VARCHAR}, #{addr1, jdbcType=VARCHAR}, 
+        #{addr2, jdbcType=VARCHAR}, #{postcode, jdbcType=VARCHAR}, 
+        #{birth, jdbcType=VARCHAR}, #{point, jdbcType=INTEGER}, CURRENT_TIMESTAMP)
+    </insert>
+
+	<update id="changePw">
+		update member set pw=#{pw} where email=#{email}
+	</update>
+	<update id="changeInfo">
+		update member set name=#{name}, tel=#{tel}, 
+		addr1=#{addr1}, addr2=#{addr2}, postcode=#{postcode} where email=#{email}
+	</update>
+	<update id="changePoint">
+		update member set point=point+#{point} where email=#{email}
+	</update>
+	<delete id="delMember">
+		delete from member where email=#{email}
+	</delete>
+</mapper>

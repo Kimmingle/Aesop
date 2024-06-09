@@ -19,7 +19,7 @@
             <a href=""><li class="menu">키트&트레블</li></a>
             <a href=""><li class="menu">읽기</li></a>
             <a href=""><li class="menu">스토어</li></a>
-            <a href=""><li class="menu">게시판</li></a>
+            <a href="${path1 }/board/GetQnaList.do"><li class="menu">게시판</li></a>
             <a href=""><li class="menu">검색</li></a>
             <a href="${path1 }/socket/userTest"><li class="menu">user채팅</li></a>
             <a href="${path1 }/socket/adminTest"><li class="menu">admin채팅</li></a>
@@ -27,19 +27,20 @@
     </nav>
     <nav id="tnb">
         <ul id="topmenu">
-        <c:if test="${!empty cus.id}">
-            <a href=""><li class="topitem">로그아웃</li></a>
-            <a href=""><li class="topitem">위시리스트</li></a>
-            <a href=""><li class="topitem">카트</li></a>
-        </c:if>
-        <c:if test="${empty cus.id}">
-            <a href=""><li class="topitem">로그인</li></a>
-            <a href=""><li class="topitem">위시리스트</li></a>
-            <a href=""><li class="topitem">카트</li></a>
-        </c:if>
-        <c:if test="${sid.equals('admin')}"></a>
-        	<a href="">관리자 페이지</a>
+        <c:if test="${semail.equals('admin@aesop.com')}">
+        	<a href=""><li class="topitem">관리자 페이지</li></a>
     	</c:if>
+         <c:if test="${!empty semail}">
+            <a href="${path2}/member/mypage.do"><li class="topitem">마이페이지</li></a>
+            <a href="${path2}/member/wishList.do"><li class="topitem">위시리스트</li></a>
+            <a href="${path2}/member/cart.do"><li class="topitem">카트</li></a>
+        </c:if>
+        <c:if test="${empty semail}">
+            <a href="${path2}/member/login.do"><li class="topitem">로그인</li></a>
+            <a href="${path2}/member/login.do"><li class="topitem">위시리스트</li></a>
+            <a href="${path2}/member/login.do"><li class="topitem">카트</li></a>
+        </c:if>
+        
         </ul>
     </nav>
 </div>
