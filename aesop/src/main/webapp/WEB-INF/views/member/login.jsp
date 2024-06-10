@@ -3,11 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="path2" value="${pageContext.servletContext.contextPath }" />
-<!DOCTYPE>
-<html lang="ko">
+<!DOCTYPE html>
+<html>
 <head>
 	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>LOGIN</title>
 <jsp:include page="../head.jsp"></jsp:include></head>

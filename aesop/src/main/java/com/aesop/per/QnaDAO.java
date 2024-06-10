@@ -26,28 +26,28 @@ public class QnaDAO implements QnaMapper {
 	
 	@Override
 	public Qna getQna(int no) {
-		return sqlSession.selectOne("Qna.getQna", no);
+		return sqlSession.selectOne("qna.getQna", no);
 	}
 
 	@Override
 	public void insQna(Qna qna) {
-		sqlSession.insert("Qna.insQna", qna);
+		sqlSession.insert("qna.insQna", qna);
 	}
 
 	@Override
 	public void upQna(Qna qna) {
-		sqlSession.update("Qna.upQna", qna);
+		sqlSession.update("qna.upQna", qna);
 	}
 
 
 	@Override
 	public void delQna(int no) {
-		sqlSession.delete("Qna.delQna", no);
+		sqlSession.delete("qna.delQna", no);
 	}
 
 	@Override
 	public void hitsCount(int no) {
-		sqlSession.update("Qna.hitsCount", no);
+		sqlSession.update("qna.hitsCount", no);
 		
 	}
 	

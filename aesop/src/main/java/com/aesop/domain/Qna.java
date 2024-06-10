@@ -16,5 +16,8 @@ public class Qna {
 	private int hits;
 	private String resdate;
 	private Member member;
+	private String qnaImg1;
+	private String qnaImg2;
+	private String qnaImg3;
 	
 }

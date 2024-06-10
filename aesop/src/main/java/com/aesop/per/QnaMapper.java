@@ -12,7 +12,7 @@ public interface QnaMapper {
 	
 	public int getTotalCount();
 	public List<Qna> getQnaList();
-	public Qna getQna(int Qna);
+	public Qna getQna(int no);
 	public void hitsCount(int no);
 	public void insQna(Qna qna);
 	public void upQna(Qna qna);

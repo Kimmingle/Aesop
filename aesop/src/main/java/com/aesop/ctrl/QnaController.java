@@ -1,12 +1,24 @@
 package com.aesop.ctrl;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.aesop.biz.QnaBiz;
+import com.aesop.domain.Qna;
 
 
 
@@ -15,21 +27,89 @@ import com.aesop.biz.QnaBiz;
 public class QnaController {
 	
 	
+	private static final Logger log = LoggerFactory.getLogger(QnaController.class);
+	
 	@Autowired
-	private QnaBiz QnaService;
-//	//글 목록
+	private static final String uploadLoc = "/resources/upload/";
+	
+	@Autowired
+	private QnaBiz qnaService;
+
 	@RequestMapping("GetQnaList.do")
 	public String getQnaList(Model model) {
-		model.addAttribute("qnaList", QnaService.getQnaList());
-		System.out.println(QnaService.getQnaList());
+		model.addAttribute("qnaList", qnaService.getQnaList());
+		//System.out.println(qnaService.getQnaList());
 		return "board/qnaList";
 	}
 	
-	@RequestMapping("GetQna.do")
-	public String getBoard(@RequestParam("no") int no, Model model) {
-		model.addAttribute("qna", QnaService.getQna(no));
+	@GetMapping("GetQna.do")
+	public String getQna(@RequestParam("no") int no, Model model) {
+		model.addAttribute("getQna", qnaService.getQna(no));
+		System.out.println(qnaService.getQna(no));
 		return "board/getQna";
 	}
+	
+	@GetMapping("qIns.do")
+	public String qIns(Qna qna, Model model) {
+		return "board/qIns";
+	}
+	
+	 @PostMapping("qInsPro.do")
+	    public String insQnaPro(@RequestParam("title") String title, @RequestParam("content") String content,
+	                               @RequestParam("qnaImg1") MultipartFile qnaImg1, 
+	                               @RequestParam("qnaImg2") MultipartFile qnaImg2,
+	                               @RequestParam("qnaImg3") MultipartFile qnaImg3, HttpServletRequest request, Model model) {
+
+	        String uploadDir = request.getServletContext().getRealPath(uploadLoc);
+	        File dir = new File(uploadDir);
+
+	        String img1Name = "", img2Name = "", img3Name = "";
+
+	        if (!dir.exists()) {
+	            dir.mkdirs();
+	        }
+
+	        try {
+	            if (!qnaImg1.isEmpty()) {
+	            	img1Name = saveFile(qnaImg1, uploadDir);
+	                log.info("Uploaded file 1 name: {}", img1Name);
+	            }
+	            if (!qnaImg2.isEmpty()) {
+	            	img2Name = saveFile(qnaImg2, uploadDir);
+	                log.info("Uploaded file 2 name: {}", img2Name);
+	            }
+	            if (!qnaImg3.isEmpty()) {
+	            	img3Name = saveFile(qnaImg3, uploadDir);
+	                log.info("Uploaded file 3 name: {}", img3Name);
+	            }
+	        } catch (IOException e) {
+	            log.error("Exception: {}", e);
+	        }
+
+	        Qna qna = new Qna();
+	        qna.setTitle(title);
+	        qna.setContent(content);
+	        qna.setQnaImg1(img1Name);
+	        qna.setQnaImg2(img2Name);
+	        qna.setQnaImg3(img3Name);
+	        
+
+	        qnaService.insQna(qna);
+	        return "redirect:GetQnaList.do";
+	    }
+
+	    public String saveFile(MultipartFile file, String uploadDir) throws IOException {
+	        String originalFilename = file.getOriginalFilename();
+	        String newFilename = UUID.randomUUID().toString() + "_" + originalFilename;
+	        File serverFile = new File(uploadDir + newFilename);
+	        file.transferTo(serverFile);
+	        return newFilename;
+	    }
+	    @GetMapping("update.do")
+	    public String upQna(@RequestParam("no") int no, Model model) {
+	        model.addAttribute("qna", qnaService.getQna(no));
+	        return "qna/edit";
+	    }
 //	
 //	//신규 글 작성 화면 요청=========================================================
 //	@RequestMapping("/new.qna")

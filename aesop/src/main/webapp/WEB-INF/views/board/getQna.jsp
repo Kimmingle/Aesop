@@ -7,7 +7,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${title }</title>
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>QnA 상세보기</title>
 <jsp:include page="../head.jsp"></jsp:include>
 <style>
 .container { width:1400px; }
@@ -43,42 +44,77 @@ th.item3 { width:20%; }
 					<tbody>
 						<tr>
 							<th>글 번호</th>
-							<td>${qna.no }</td>
+							<td>${getQna.no }</td>
 						</tr>
 						<tr>
 							<th>글 제목</th>
-							<td>${qna.title }</td>
+							<td>${getQna.title }</td>
 						</tr>
 						<tr>
 							<th>글 내용</th>
-							<td>${qna.content }</td>
+							<td>${getQna.content }</td>
 						</tr>
 						<tr>
 							<th>작성일시</th>		
-							<td>${qna.resdate }</td>
+							<td>${getQna.resdate }</td>
 						</tr>
 						<tr>
 							<th>조회수</th>
-							<td>${qna.visited }</td>
+							<td>${getQna.hits }</td>
+						</tr>
+						
+						<tr>
+						    <td colspan="2">
+						        <c:if test="${not empty qna.qnaImg1}">
+						            <img src="${path2}/resources/upload/${qna.qnaImg1}" alt="${qna.qnaImg1}"/>
+						        </c:if>
+						    </td>
+						</tr>
+						<tr>
+						    <td colspan="2">
+						        <c:if test="${not empty qna.qnaImg2}">
+						            <img src="${path2}/resources/upload/${qna.qnaImg2}" alt="${qna.qnaImg2}"/>
+						        </c:if>
+						    </td>
+						</tr>
+						<tr>
+						    <td colspan="2">
+						        <c:if test="${not empty qna.qnaImg3}">
+						            <img src="${path2}/resources/upload/${qna.qnaImg3}" alt="${qna.qnaImg3}"/>
+						        </c:if>
+						    </td>
 						</tr>
 					</tbody>
 				</table>
 				<hr>
 				<div class="btn-group">
-				  <c:if test="${(not empty email) and qna.lev==1 }">
-				  <a href="${path0 }/qna/aIns.jsp?parno=${qna.no }" class="btn btn-secondary">답변 등록</a>
+				  <c:if test="${cus.email.equals('admin@aesop.com') and getQna.lev==1 }">
+				  <a href="${path0 }/qna/aIns.jsp?parno=${getQna.no }" class="btn btn-secondary">답변 등록</a>
+				  
+				   <h4>댓글을 입력해 주세요</h4>
+				      <!-- 원글에 댓글을 작성할 폼 -->
+				      <form class="comment-form insert-form" action="comment_insert" method="post">
+				         <!-- 원글의 글번호가 댓글의 ref_group 번호가 된다. -->
+				         <input type="hidden" name="ref_group" value="${dto.num }"/>
+				         <!-- 원글의 작성자가 댓글의 대상자가 된다. -->
+				         <input type="hidden" name="target_id" value="${dto.writer }"/>
+				   
+				         <textarea name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
+				         <button type="submit">등록</button>
+				      </form>
+				  
 				  </c:if>
-				  <c:if test="${sid.equals(qna.email) }">
+				  <c:if test="${sessionScope.email.equals(getQna.email) }">
 					  <c:if test="${qna.lev==1 }">
-					  <a href="${path0 }/EditQna.do?no=${qna.no }" class="btn btn-secondary">질문 수정</a>
-					  <a href="${path0 }/DelQuestion.do?parno=${qna.no }" class="btn btn-secondary">질문 삭제</a>
+					  <a href="${path0 }/EditQna.do?no=${getQna.no }" class="btn btn-secondary">질문 수정</a>
+					  <a href="${path0 }/DelQuestion.do?parno=${getQna.no }" class="btn btn-secondary">질문 삭제</a>
 					  </c:if>
-					  <c:if test="${qna.lev==2 }">
-					  <a href="${path0 }/EditQna.do?no=${qna.no }" class="btn btn-secondary">답변 수정</a>
-					  <a href="${path0 }/DelAnswer.do?no=${qna.no }" class="btn btn-secondary">답변 삭제</a>
+					  <c:if test="${cus.email.equals('admin@aesop.com') and getQna.lev==2 }">
+					  <a href="${path0 }/EditQna.do?no=${getQna.no }" class="btn btn-secondary">답변 수정</a>
+					  <a href="${path0 }/DelAnswer.do?no=${getQna.no }" class="btn btn-secondary">답변 삭제</a>
 					  </c:if>
   				  </c:if>
-				  <a href="${path0 }/GetQnaList.do" class="btn btn-secondary">질문 및 답변 목록</a>
+				  <a href="${path0 }/board/GetQnaList.do" class="btn btn-secondary">질문 및 답변 목록</a>
 				</div>
 			</div>
 		</div>

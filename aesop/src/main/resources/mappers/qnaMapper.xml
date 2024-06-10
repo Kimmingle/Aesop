@@ -25,5 +25,34 @@
 		<!-- limit 0, 5; limit #{startRowNumber}, #{contentNumberPerPage}  -->
 	</select>	
 	
+	<!-- 묻고 답하기 상세 보기 -->
+	<select id="getQna" resultMap="qnaRM">
+		select q.no, q.title, q.content, q.lev, q.parno, q.hits, q.resdate, m.email, m.name 
+		from qna q, member m 
+		where q.email=m.email and no=#{no}
+	</select>
+	
+	<!-- 묻고 답하기 글 조회수 증가 -->
+	<update id="hitsCount">
+		update qna set hits=hits+1 where no=#{no}
+	</update>
+	
+	<!-- 문의 등록 -->
+ 	<insert id="insQna" parameterType="com.aesop.domain.Qna">
+        INSERT INTO notice (no, title, content, name, hits, regDate, qnaImg1, qnaImg2, qnaImg3) 
+        VALUES (default, #{title},#{content}, default, default, default, #{qnaImg1}, #{qnaImg2}, #{qnaImg3})
+    </insert>
+	
+	 <update id="upQna" parameterType="com.aesop.domain.Qna">
+        UPDATE qna 
+        SET title = #{title}, 
+            content = #{content}, 
+            img1 = #{qnaImg1}, 
+            img2 = #{qnaImg2}, 
+            img3 = #{qnaImg3}, 
+        WHERE no = #{no}
+    </update>
+	
+	
 	
 </mapper>

@@ -53,6 +53,8 @@ public class QnaService implements QnaBiz {
 	public void delQna(int no) {
 		QnaDAO.delQna(no);
 	}
+
+	
 	
 }
 	

@@ -53,7 +53,7 @@ https://www.springframework.org/schema/context/spring-context.xsd">
 </beans:bean>
 <!--  멀티파트 업로드 디렉토리 지정  -->
 <beans:bean id="uploadPath" class="java.lang.String">
-<beans:constructor-arg value="f:\cho\aesop\aesop\src\main\webapp\resources\upload"/>
+<beans:constructor-arg value="D:\kma\teamproject_Aesop\aesop\src\main\webapp\resources\upload"/>
 </beans:bean>
 <!--  기본 메인 패키지 및 컨트롤러 패키지 설정  -->
 <context:component-scan base-package="com.aesop.*"/>

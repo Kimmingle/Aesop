@@ -8,6 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>${title }</title>
 <jsp:include page="../head.jsp"></jsp:include>
 <script src="${path1 }/js/jquery.dataTables.js"></script>
@@ -42,7 +43,7 @@ th.item4 { width:15%; }
 			<hr>
 		</div>
 		<div style="width:1400px; margin:0 auto;">
-			<h3 class="page_title">질문 및 답변</h3>
+			<h3 class="page_title">QnA</h3>
 			<div>
 				<table class="table" id="tb1">
 					<thead>
@@ -62,21 +63,24 @@ th.item4 { width:15%; }
 								<td>${fn:length(qnaList) - status.index }</td>
 								<td>
 								
-									<c:if test="${not empty email}">
+									
+										
+										
+									
+									
+									<!-- <c:if test="${not empty email}">
 										<c:if test="${dto.lev==1 }">
 										<strong>${dto.title }</strong>
 										</c:if>
 										<c:if test="${dto.lev==2 }">
 										<strong style="padding-left:40px">[답변] ${dto.title }</strong>
 										</c:if>
-									</c:if> 
+									</c:if>  -->
 									
 									<c:if test="${(empty email) and (dto.lev==1)}">
-									<a href="${path1 }/GetQna.do?no=${dto.no }">${dto.title }</a>
+									<strong><a href="${path1 }/board/GetQna.do?no=${dto.no }">${dto.title }</a></strong>
 									</c:if>
-									<c:if test="${(empty email) and (dto.lev==2)}">
-									<a href="${path1 }/GetQna.do?no=${dto.no }"><span style="padding-left:40px">  [답변]</span> ${dto.title }</a>
-									</c:if>
+									
 								</td>  
 								<td>
 									<fmt:parseDate value="${dto.resdate }" var="res" pattern="yyyy-MM-dd HH:mm:ss" />
@@ -107,9 +111,9 @@ th.item4 { width:15%; }
 				});
 				</script>
 				
-				<c:if test="${not empty email }">
+				<c:if test="${empty email }">
 				<div class="btn-group">
-				  <a href="${path1 }/qna/qIns.jsp" class="btn btn-secondary">질문 등록</a>
+				  <a href="${path1 }/board/qIns.do" class="btn btn-secondary">질문 등록</a>
 				</div>
 				</c:if>
 			</div>
