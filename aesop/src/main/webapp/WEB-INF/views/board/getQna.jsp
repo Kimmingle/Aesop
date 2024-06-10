@@ -65,8 +65,8 @@ th.item3 { width:20%; }
 						
 						<tr>
 						    <td colspan="2">
-						        <c:if test="${not empty qna.qnaImg1}">
-						            <img src="${path2}/resources/upload/${qna.qnaImg1}" alt="${qna.qnaImg1}"/>
+						        <c:if test="${not empty getQna.qnaImg1}">
+						            <img src="${path2}/resources/upload/${getQna.qnaImg1}" alt="${getQna.qnaImg1}"/>
 						        </c:if>
 						    </td>
 						</tr>

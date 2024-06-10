@@ -18,18 +18,22 @@
 	<!-- 묻고 답하기 목록 조회 -->
 	<!-- <select id="getQnaList" parameterType="pagingBean" resultMap="qnaRM"> -->
 	<select id="getQnaList" parameterType="pagingBean" resultMap="qnaRM">
-		select q.no, q.title, q.content, q.lev, q.parno, q.hits, q.resdate, m.email, m.name 
+	
+	select * from qna order by resdate desc
+	<!--	select q.no, q.title, q.content, q.lev, q.parno, q.hits, q.resdate, m.email, m.name 
 			from qna q, member m 
-			where q.email=m.email order by q.resdate desc  
+			where q.email=m.email order by q.resdate desc  -->
 			
 		<!-- limit 0, 5; limit #{startRowNumber}, #{contentNumberPerPage}  -->
 	</select>	
 	
 	<!-- 묻고 답하기 상세 보기 -->
 	<select id="getQna" resultMap="qnaRM">
-		select q.no, q.title, q.content, q.lev, q.parno, q.hits, q.resdate, m.email, m.name 
+		<!--  select q.no, q.title, q.content, q.lev, q.parno, q.hits, q.resdate, m.email, m.name 
 		from qna q, member m 
-		where q.email=m.email and no=#{no}
+		where q.email=m.email and no=#{no}-->
+		select * from qna where no=#{no}
+		
 	</select>
 	
 	<!-- 묻고 답하기 글 조회수 증가 -->
@@ -39,8 +43,8 @@
 	
 	<!-- 문의 등록 -->
  	<insert id="insQna" parameterType="com.aesop.domain.Qna">
-        INSERT INTO notice (no, title, content, name, hits, regDate, qnaImg1, qnaImg2, qnaImg3) 
-        VALUES (default, #{title},#{content}, default, default, default, #{qnaImg1}, #{qnaImg2}, #{qnaImg3})
+        INSERT INTO qna (no, title, content, name, hits, resdate, email,qnaImg1, qnaImg2, qnaImg3) 
+        VALUES (default, #{title},#{content}, #{member.name}, default, default,#{member.email}, #{qnaImg1}, #{qnaImg2}, #{qnaImg3})
     </insert>
 	
 	 <update id="upQna" parameterType="com.aesop.domain.Qna">
