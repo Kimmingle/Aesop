@@ -67,9 +67,13 @@ th.item3 { width:20%; }
 						    <td colspan="2">
 						        <c:if test="${not empty getQna.qnaImg1}">
 						            <img src="${path2}/resources/upload/${getQna.qnaImg1}" alt="${getQna.qnaImg1}"/>
+						        	 <div class="imgDiv"><img src="" /></div>
 						        </c:if>
 						    </td>
 						</tr>
+						
+
+						
 						<tr>
 						    <td colspan="2">
 						        <c:if test="${not empty qna.qnaImg2}">
@@ -86,6 +90,8 @@ th.item3 { width:20%; }
 						</tr>
 					</tbody>
 				</table>
+				
+										
 				<hr>
 				<div class="btn-group">
 				  <c:if test="${cus.email.equals('admin@aesop.com') and getQna.lev==1 }">

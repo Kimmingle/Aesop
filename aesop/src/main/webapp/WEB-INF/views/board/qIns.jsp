@@ -52,25 +52,36 @@
 							</td>
 						</tr>
 						<tr>
-					           <th><label for="img1">썸네일 이미지</label></th>
-					                <td>
-					                    <input type="file" name="qnaImg1" id="qnaImg1" accept="image/*" required/>
-					                </td>
-					            </tr>
+					           
 					            <tr>
-					                <th><label for="img2">이미지 1</label></th>
+					                <th><label for="qnaImg1">이미지 1</label></th>
 					                <td>
 					                    <input type="file" name="qnaImg1" id="qnaImg1" accept="image/*"/>
+					                    <div class="select_img"><img src="" /></div>
 					                </td>
 					            </tr>
+					            
+					            <script>
+  $("#qnaImg1").change(function(){
+   if(this.files && this.files[0]) {
+    var reader = new FileReader;
+    reader.onload = function(data) {
+     $(".select_img img").attr("src", data.target.result).width(500);        
+    }
+    reader.readAsDataURL(this.files[0]);
+   }
+  });
+ </script>
+					            
+					            
 					            <tr>
-					                <th><label for="img3">이미지 2</label></th>
+					                <th><label for="qnaImg2">이미지 2</label></th>
 					                <td>
 					                    <input type="file" name="qnaImg2" id="qnaImg2" accept="image/*"/>
 					                </td>
 					            </tr>
 					            <tr>
-					                <th><label for="img4">이미지 3</label></th>
+					                <th><label for="qnaImg3">이미지 3</label></th>
 					                <td>
 					                    <input type="file" name="qnaImg3" id="qnaImg3" accept="image/*"/>
 					                </td>
@@ -83,6 +94,7 @@
 				  <a href="${path0 }/GetQnaList.do" class="btn btn-secondary">질문 및 답변 목록</a>
 				</div>
 			</form>
+			
 		</div>
 	</section>
 </div>
