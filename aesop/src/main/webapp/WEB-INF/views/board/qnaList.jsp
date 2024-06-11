@@ -13,8 +13,10 @@
 <jsp:include page="../head.jsp"></jsp:include>
 <script src="${path1 }/js/jquery.dataTables.js"></script>
 <link rel="stylesheet" href="${path1 }/css/jquery.dataTables.css" >
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <style>
-
+.container { width:1400px; }
+.page { clear:both; height:100vh; }
 .page_title { font-size:36px; padding-top:2em; text-align:center; }
 th.item1 { width:8%; }
 th.item2 { width:50%; }
@@ -30,8 +32,31 @@ th.item4 { width:15%; }
     </header>
     
     
+    
+ 
 <div id="contents">
-	<section class="page" id="page1">
+
+	<div style="padding-top:100px">
+     	<div>
+            <a href="#tab01" class="tab" data-target="#notice_page">notice</a>
+        </div>
+        
+     	<div>
+            <a href="#tab02" class="tab" data-target="#qna_page">qna</a>
+        </div>
+    </div>
+    
+
+
+	<div class="tabcontent">
+	
+	<section class="page" id="notice_page">
+	<h2>공지사항</h2>
+	</section>
+	
+	
+	<section class="page" id="qna_page">
+	<h2>묻고답하기</h2>
 		<div style="width:1400px; margin:0 auto;">
 			<nav aria-label="breadcrumb" style="text-align:right">
 			  <ol class="breadcrumb">
@@ -63,10 +88,6 @@ th.item4 { width:15%; }
 								<td>${fn:length(qnaList) - status.index }</td>
 								<td>
 								
-									
-										
-										
-									
 									
 									<!-- <c:if test="${not empty email}">
 										<c:if test="${dto.lev==1 }">
@@ -104,11 +125,11 @@ th.item4 { width:15%; }
 				
 				
 				<script>
-				$(document).ready(function(){
-					$("#tb1").DataTable({
-						order:[[0,"desc"]]
-					});
-				});
+				//$(document).ready(function(){
+				//	$("#tb1").DataTable({
+				//		order:[[0,"desc"]]
+				//	});
+				//});
 				</script>
 				
 				<c:if test="${empty email }">
@@ -119,10 +140,28 @@ th.item4 { width:15%; }
 			</div>
 		</div>
 	</section>	
+	
+	
+</div>
 </div>
 <!-- 푸터 부분 인클루드 -->
-    <footer id="ft">
-    	
-    </footer>
+    
+    
+    
+    
+    
+    <script>
+        $(function(){
+            $('.tabcontent > section').hide();
+            $('.tab').click(function () {  // a태그안에 있는 icon클래스(걍 아이콘)를 클릭하면 함수 실행되게 함 
+                var targetSectionID = $(this).attr('data-target'); // 해당 아이콘의 data-target 속성 값 가져오기
+                $('.tabcontent > section').hide(); // 모든 섹션 숨기기
+                $(targetSectionID).fadeIn(); // 클릭한 아이콘에 해당하는 섹션 보이기
+                $('.tab').removeClass('active'); // 모든 아이콘에서 active 클래스 제거
+                $(this).addClass('active'); // 클릭한 아이콘에 active 클래스 추가
+                return false;
+            }).filter(':eq(0)').click();
+        });
+    </script>
 </body>
 </html>
